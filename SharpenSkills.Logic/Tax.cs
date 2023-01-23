@@ -6,6 +6,7 @@
 
         public Tax()
         {
+            // default percentage is applied when creating new Tax object
             Percentage = 20;
         }
     }

@@ -4,17 +4,10 @@ namespace SharpenSkills.Logic
 {
     public class Director
     {
-        private readonly PriceReportBuilder _resultBuilder;
-
-        //public Director(PriceReportBuilder resultBuilder)
-        //{
-        //    _resultBuilder = resultBuilder;
-        //}
-
         public PriceReport CreatePriceReport(Product product, Tax tax)
         {
-            product = product != null ? product : new Product();
-            tax = tax != null ? tax : new Tax();
+            product = product ?? new Product();
+            tax = tax ?? new Tax();
 
             if (tax.Percentage < 0 || tax.Percentage > 100)
             {
