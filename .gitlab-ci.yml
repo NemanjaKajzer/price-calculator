@@ -9,6 +9,8 @@ build_job:
   script:
     - cd ..
     - ls
-    - cd..
+    - cd ..
+    - ls
+    - cd ..
     - ls
 
