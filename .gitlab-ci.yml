@@ -1,10 +1,3 @@
-variables:
-  EXE_RELEASE_FOLDER: 'SharpenSkills.Logic\bin\Release'
-  MSI_RELEASE_FOLDER: 'Setup\bin\Release'
-  TEST_FOLDER: 'SharpenSkills.Tests\bin\Release'
-  NUGET_PATH: 'C:\Program Files (x86)\nuget.exe'
-  MSBUILD_PATH: 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe'
-  NUNIT_PATH: 'C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe'
 
 stages:
   - build
@@ -14,6 +7,6 @@ stages:
 build_job:
   stage: build
   script:
-    - 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe /p:Configuration=Release'  # build the project
+    - 'msbuild.exe SharpenSkills.sln'  # build the project
 
 
