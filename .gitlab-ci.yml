@@ -13,8 +13,6 @@ stages:
 
 build_job:
   stage: build
-  only:
-    - tags  # the build process will only be started by git tag commits
   script:
     - '& "$env:MSBUILD_PATH" /p:Configuration=Release'  # build the project
 
