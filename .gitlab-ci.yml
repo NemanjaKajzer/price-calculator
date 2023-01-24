@@ -7,6 +7,6 @@ stages:
 build_job:
   stage: build
   script:
-    - 'msbuild.exe SharpenSkills.sln'  # build the project
+    - 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\msbuild.exe /p:Configuration=Release'  # build the project
 
 
