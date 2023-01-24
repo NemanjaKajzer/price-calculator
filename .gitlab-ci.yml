@@ -8,4 +8,7 @@ build_job:
   stage: build
   script:
     - cd ..
+    - ls
+    - cd..
+    - ls
 
