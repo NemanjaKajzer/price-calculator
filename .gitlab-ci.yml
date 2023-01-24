@@ -14,6 +14,6 @@ stages:
 build_job:
   stage: build
   script:
-    - '& "$env:MSBUILD_PATH" /p:Configuration=Release'  # build the project
+    - 'C:\Program Files (x86)\MSBuild\15.0\Bin\msbuild.exe /p:Configuration=Release'  # build the project
 
 
