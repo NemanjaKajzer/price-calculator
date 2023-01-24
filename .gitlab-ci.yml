@@ -6,6 +6,7 @@ stages:
 
 build_job:
   stage: build
+  image: microsoft/dotnet:latest
   script:
     - dotnet build
 
