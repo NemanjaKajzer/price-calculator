@@ -3,7 +3,7 @@ variables:
   MSI_RELEASE_FOLDER: 'Setup\bin\Release'
   TEST_FOLDER: 'SharpenSkills.Tests\bin\Release'
   NUGET_PATH: 'C:\Program Files (x86)\nuget.exe'
-  MSBUILD_PATH: 'C:\Program Files (x86)\MSBuild\15.0\Bin\msbuild.exe'
+  MSBUILD_PATH: 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe'
   NUNIT_PATH: 'C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe'
 
 stages:
@@ -14,6 +14,6 @@ stages:
 build_job:
   stage: build
   script:
-    - '& "$env:C:\Program Files (x86)\MSBuild\15.0\Bin\msbuild.exe" /p:Configuration=Release'  # build the project
+    - '& "$env:MSBUILD_PATH" /p:Configuration=Release'  # build the project
 
 
