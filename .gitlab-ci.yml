@@ -16,4 +16,15 @@ test_job:
   stage: test
   script:
     - dotnet test --no-build -c Release -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "junit;LogFilePath=$CI_PROJECT_DIR/junit/junit-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/cobertura/*/coverage.cobertura.xml
+      - $CI_PROJECT_DIR/junit/junit-test-result.xml
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: $CI_PROJECT_DIR/cobertura/*/coverage.cobertura.xml
+      junit:
+        - $CI_PROJECT_DIR/junit/junit-test-result.xml
+
     
