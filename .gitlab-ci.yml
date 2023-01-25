@@ -12,4 +12,7 @@ build_job:
    - 'dotnet build'
 
 
-
+test_job:
+  stage: test
+  script:
+    - dotnet test --no-build -c Release -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "trx;LogFileName=testreport.trx"
