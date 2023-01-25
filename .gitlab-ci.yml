@@ -2,10 +2,18 @@
   
 stages:
   - build
+  - test
 
     
 build_job:
   stage: build
   script:
-    - 'dotnet restore' # build the project
+   # - 'dotnet restore'
+   # - 'dotnet build'
+   - echo 'bla'
+
+test_job:
+  stage: test
+  script:
+    - '& "$env:SharpenSkills.Tests\bin\Release" ".\$env:TEST_FOLDER\SharpenSkills.Tests.dll"'
 
