@@ -14,5 +14,5 @@ build_job:
 test_job:
   stage: test
   script:
-    - '"SharpenSkills.Tests\bin\Release" ".\$env:TEST_FOLDER\SharpenSkills.Tests.dll"'
+    - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "SharpenSkills.Tests\bin\Release"'
 
