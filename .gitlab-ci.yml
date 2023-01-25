@@ -16,8 +16,10 @@ test_job:
   stage: test
   script:
     - dotnet test --no-build -c Release -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "trx;LogFileName=testreport.trx"
-  after_script:
-        - trx2junit src\SharpenSkills.Tests\Testresults\testreport.trx 
   artifacts:
-        reports:
-            junit: SharpenSkills.Tests\Testresults\testreport.xml
+    when: always  # save test results even when the task fails
+    expire_in: 1 week  # save gitlab server space, we copy the files we need to deploy folder later on
+    paths:
+      - '.\TestResult.xml'  # saving NUnit results to copy to deploy folder
+  dependencies:
+    - build_job
