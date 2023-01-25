@@ -1,3 +1,7 @@
+variables:
+  CONFIGURATION: "Debug"
+  COVERAGE_FLAG: "XPlat Code Coverage"
+  LOGGER_FLAG: "junit;LogFilePath=$CI_PROJECT_DIR/junit/junit-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"
 
   
 stages:
@@ -15,7 +19,13 @@ build_job:
 test_job:
   stage: test
   script:
-    - dotnet test --no-build -c Debug -r $CI_PROJECT_DIR/cobertura -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "junit;LogFilePath=$CI_PROJECT_DIR/junit/junit-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"
+    - 'dotnet test
+              -c $CONFIGURATION
+              -r $CI_PROJECT_DIR/cobertura
+              --collect:"$COVERAGE_FLAG"
+              --test-adapter-path:.
+              --logger:"$LOGGER_FLAG"'
+
   artifacts:
     paths:
       - SharpenSkills.Tests/coverage.cobertura.xml
