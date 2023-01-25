@@ -14,5 +14,5 @@ build_job:
 test_job:
   stage: test
   script:
-    - '"C:\Program Files (x86)\NUnit.org\nunit-console\nunit3-console.exe" "SharpenSkills.Tests\bin\Release"'
+    - dotnet test --no-build -c Release -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "trx;LogFileName=testreport.trx"
 
