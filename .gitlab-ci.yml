@@ -9,5 +9,5 @@ stages:
 build_job:
   stage: build
   script:
-    - '& "$env:MSBUILD_PATH" /p:Configuration=Release'
+    - '"$env:MSBUILD_PATH" /p:Configuration=Release'
 
