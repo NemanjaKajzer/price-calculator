@@ -5,7 +5,7 @@ stages:
   - build
 
 before_script:
-  - 'C:\Nuget\nuget.exe restore SharpenSkills.sln'
+  - 'C:\NuGet\nuget.exe restore SharpenSkills.sln'
     
 build_job:
   stage: build
