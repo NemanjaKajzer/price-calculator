@@ -10,5 +10,5 @@ stages:
     
 build_job:
   stage: build
-  script: dotnet build --configuration $(buildConfiguration)
+  script: dotnet build --configuration Release
 
