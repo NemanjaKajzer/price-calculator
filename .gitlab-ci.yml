@@ -5,6 +5,7 @@ stages:
 
     
 build_job:
+  stage: build
   script:
     - 'nuget restore' # restore Nuget dependencies
     - 'msbuild /p:Configuration=Release' # build the project
