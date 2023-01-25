@@ -16,3 +16,8 @@ test_job:
   stage: test
   script:
     - dotnet test --no-build -c Release -v n SharpenSkills.Tests\SharpenSkills.Tests.csproj --logger "trx;LogFileName=testreport.trx"
+  after_script:
+        - trx2junit src\SharpenSkills.Tests\Testresults\testreport.trx 
+  artifacts:
+        reports:
+            junit: SharpenSkills.Tests\Testresults\testreport.xml
