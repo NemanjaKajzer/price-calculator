@@ -3,10 +3,8 @@
 stages:
   - build
 
-before_script:
-  - 'C:\NuGet\nuget.exe restore SharpenSkills.sln'
     
 build_job:
   stage: build
-  script: ls
+  script: 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin /p:Configuration=Release'
 
