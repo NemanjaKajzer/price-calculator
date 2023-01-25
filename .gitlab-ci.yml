@@ -5,6 +5,7 @@ stages:
 
     
 build_job:
-  stage: build
-  script: '"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe" /p:Configuration=Release'
+  script:
+    - 'nuget restore' # restore Nuget dependencies
+    - 'msbuild /p:Configuration=Release' # build the project
 
