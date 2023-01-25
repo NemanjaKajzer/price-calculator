@@ -8,9 +8,8 @@ stages:
 build_job:
   stage: build
   script:
-   # - 'dotnet restore'
-   # - 'dotnet build'
-   - echo 'bla'
+   - 'dotnet restore'
+   - 'dotnet build'
 
 test_job:
   stage: test
