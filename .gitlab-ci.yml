@@ -12,9 +12,6 @@ test_job:
   stage: test
   script:
     - 'dotnet test'
-  artifacts:
-    reports:
-      junit: report.xml
 
 
 
