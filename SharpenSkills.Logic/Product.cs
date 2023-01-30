@@ -9,7 +9,7 @@ namespace SharpenSkills.Logic
     public class Product
     {
         public string Name { get; set; }
-        public int Upc { get; set; }
-        public double Price { get; set; }
+        public string Upc { get; set; }
+        public decimal Price { get; set; }
     }
 }

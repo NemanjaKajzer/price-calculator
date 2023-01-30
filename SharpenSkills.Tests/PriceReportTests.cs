@@ -13,8 +13,8 @@ namespace SharpenSkills.Tests
             _product = new Product()
             {
                 Name = "The Little Prince",
-                Upc = 12345,
-                Price = 20.25,
+                Upc = "12345",
+                Price = 20.25m,
             };
 
             _tax = new Tax
@@ -28,7 +28,7 @@ namespace SharpenSkills.Tests
         {
             var director = new Director();
 
-            var report = director.CreatePriceReport(_product, null);
+            var report = director.Calculate(_product, null);
 
             Assert.IsNotNull(report);
             Assert.AreEqual(20.25, report.Price);
@@ -40,7 +40,7 @@ namespace SharpenSkills.Tests
         {
             var director = new Director();
 
-            var report = director.CreatePriceReport(_product, _tax);
+            var report = director.Calculate(_product, _tax);
 
             Assert.IsNotNull(report);
             Assert.AreEqual(20.25, report.Price);
@@ -57,7 +57,7 @@ namespace SharpenSkills.Tests
                 Percentage = -25,
             };
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => director.CreatePriceReport(_product, tax));
+            Assert.Throws<ArgumentOutOfRangeException>(() => director.Calculate(_product, tax));
         }
     }
 }

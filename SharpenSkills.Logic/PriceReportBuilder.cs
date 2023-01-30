@@ -8,12 +8,12 @@ namespace SharpenSkills.Logic
 
         public void Reset() { Report = new PriceReport(); }
 
-        public void ApplyPrice(double price)
+        public void ApplyPrice(decimal price)
         {
             Report.Price = Math.Round(price, 2);
         }
 
-        public void ApplyTax(double taxPct)
+        public void ApplyTax(decimal taxPct)
         {
             Report.Tax = Math.Round(Report.Price * taxPct / 100, 2);
         }

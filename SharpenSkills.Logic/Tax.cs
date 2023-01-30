@@ -2,7 +2,7 @@
 {
     public class Tax
     {
-        public double Percentage { get; set; }
+        public decimal Percentage { get; set; }
 
         public Tax()
         {

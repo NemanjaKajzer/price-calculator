@@ -4,7 +4,7 @@ namespace SharpenSkills.Logic
 {
     public class Director
     {
-        public PriceReport CreatePriceReport(Product product, Tax tax)
+        public PriceReport Calculate(Product product, Tax tax)
         {
             product = product ?? new Product();
             tax = tax ?? new Tax();

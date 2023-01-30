@@ -8,12 +8,9 @@ namespace SharpenSkills.Logic
 {
     public class PriceReport
     {
-        //public string Name { get; set; }
-        //public int Upc { get; set; }
-        public double Price { get; set; }
-        public double Tax { get; set; }
-        //public double Discount { get; set; }
-        public double Total { get; set; }
+        public decimal Price { get; set; }
+        public decimal Tax { get; set; }
+        public decimal Total { get; set; }
 
         public PriceReport()
         {
