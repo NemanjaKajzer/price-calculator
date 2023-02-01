@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SharpenSkills.Logic
 {
-    public class Product
+    public interface IPercentage
     {
-        public string Name { get; set; }
-        public string Upc { get; set; }
-        public decimal Price { get; set; }
+        decimal Value { get; set; }
     }
 }
