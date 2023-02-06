@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharpenSkills.Logic
+﻿namespace SharpenSkills.Logic
 {
     public class PriceReport
     {
@@ -29,19 +23,19 @@ namespace SharpenSkills.Logic
         {
             var defaultTax = new DefaultTax();
 
-            TaxTotal = new Money { Amount = Price.Amount * defaultTax.Percentage.Value };
+            TaxTotal = Price.Percent(defaultTax.Percentage);
         }
 
         public void SetCustomTax(ITax tax)
         {
             if (tax == null) return;
 
-            TaxTotal = new Money { Amount = Math.Round(Price.Amount * tax.Percentage.Value, 2) };
+            TaxTotal = Price.Percent(tax.Percentage);
         }
 
         private void SetTotal()
         {
-            Total = new Money { Amount = Price.Amount + TaxTotal.Amount };
+            Total = Price.Add(TaxTotal);
         }
 
         public PriceReport(PriceReportBuilder builder)
