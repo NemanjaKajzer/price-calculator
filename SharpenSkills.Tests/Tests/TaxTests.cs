@@ -10,17 +10,10 @@ namespace SharpenSkills.Tests
         [SetUp]
         public void Setup()
         {
-            _product = new Product
-            {
-                Name = "The Little Prince",
-                Upc = "12345",
-                Price = new Money { Amount = 20.25m },
-            };
+            var seeder = new Seeder();
 
-            _tax = new Tax
-            {
-                Percentage = new Percentage { Value = 0.21m },
-            };
+            _product = seeder.SetupProduct();
+            _tax = seeder.SetupTax();
         }
 
         [Test]
