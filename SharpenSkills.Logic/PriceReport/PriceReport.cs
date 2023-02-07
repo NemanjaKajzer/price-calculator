@@ -2,9 +2,9 @@
 {
     public class PriceReport
     {
-        public Money Price { get; set; }
-        public Money TaxTotal { get; set; }
-        public Money Total { get; set; }
+        public Money Price { get; private set; }
+        public Money TaxTotal { get; private set; }
+        public Money Total { get; private set; }
 
         public PriceReport()
         {
