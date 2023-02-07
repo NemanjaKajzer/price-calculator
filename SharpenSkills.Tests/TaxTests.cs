@@ -2,7 +2,7 @@ using SharpenSkills.Logic;
 
 namespace SharpenSkills.Tests
 {
-    public class PriceReportTests
+    public class TaxTests
     {
         private Product _product { get; set; }
         private Tax _tax { get; set; }
