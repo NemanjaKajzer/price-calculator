@@ -13,36 +13,26 @@
             Total = new Money();
         }
 
+        public PriceReport(Product product, ITax tax)
+        {
+            SetProduct(product);
+            SetTaxTotal(product, tax);
+            SetTotal();
+        }
+
         public void SetProduct(Product product)
         {
             Price = product.Price;
-            ApplyDefaultTax();
         }
 
-        private void ApplyDefaultTax()
+        public void SetTaxTotal(Product product, ITax tax)
         {
-            var defaultTax = new DefaultTax();
-
-            TaxTotal = Price.Percent(defaultTax.Percentage);
-        }
-
-        public void SetCustomTax(ITax tax)
-        {
-            if (tax == null) return;
-
-            TaxTotal = Price.Percent(tax.Percentage);
+            TaxTotal = product.Price * tax.Percentage;
         }
 
         private void SetTotal()
         {
-            Total = Price.Add(TaxTotal);
-        }
-
-        public PriceReport(PriceReportBuilder builder)
-        {
-            SetProduct(builder.Product);
-            SetCustomTax(builder.Tax);
-            SetTotal();
+            Total = Price + TaxTotal;
         }
     }
 }

@@ -11,26 +11,29 @@ namespace SharpenSkills.Logic
             Amount = 0;
         }
 
-        public Money Add(params Money[] moneys)
+        public static Money operator +(Money left, Money right)
         {
-            var total = Amount;
-            foreach (var money in moneys)
-            {
-                total += money.Amount;
-            }
-
-            return new Money { Amount = total };
+            return new Money { Amount = left.Amount + right.Amount };
         }
 
-        public Money Subtract(params Money[] moneys)
+        public static Money operator -(Money left, Money right)
         {
-            var total = Amount;
-            foreach (var money in moneys)
-            {
-                total -= money.Amount;
-            }
+            return new Money { Amount = left.Amount - right.Amount };
+        }
 
-            return new Money { Amount = total };
+        public static Money operator *(Money left, decimal right)
+        {
+            return new Money { Amount = Math.Round(left.Amount * right, 2) };
+        }
+
+        public static Money operator *(Money left, Percentage right)
+        {
+            return new Money { Amount = Math.Round(left.Amount * right.Value, 2) };
+        }
+
+        public static Money operator /(Money left, decimal right)
+        {
+            return new Money { Amount = Math.Round(left.Amount / right, 2) };
         }
 
         public Money Percent(Percentage percentage)
@@ -38,9 +41,30 @@ namespace SharpenSkills.Logic
             return new Money { Amount = Math.Round(Amount * percentage.Value, 2) };
         }
 
+        public static bool operator ==(Money left, Money right)
+        {
+            return left.Amount == right.Amount;
+        }
+
+        public static bool operator !=(Money left, Money right)
+        {
+            return left.Amount != right.Amount;
+        }
+
         public override string ToString()
         {
             return $"${Amount}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Money money &&
+                   Amount == money.Amount;
+        }
+
+        public override int GetHashCode()
+        {
+            return -602769199 + Amount.GetHashCode();
         }
     }
 }

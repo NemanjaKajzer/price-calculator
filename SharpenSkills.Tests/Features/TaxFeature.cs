@@ -2,7 +2,7 @@ using SharpenSkills.Logic;
 
 namespace SharpenSkills.Tests
 {
-    public class TaxTests
+    public class TaxFeature
     {
         private Product _product { get; set; }
         private Tax _tax { get; set; }
@@ -20,7 +20,8 @@ namespace SharpenSkills.Tests
         public void When_OnlyPriceSpecified_DefaultTaxShouldBeApplied()
         {
             var builder = new PriceReportBuilder();
-            var report = builder.ApplyProduct(_product)
+            var report = builder
+                .ApplyProduct(_product)
                 .Build();
 
 
@@ -34,7 +35,8 @@ namespace SharpenSkills.Tests
         {
             var builder = new PriceReportBuilder();
 
-            var report = builder.ApplyProduct(_product)
+            var report = builder
+                .ApplyProduct(_product)
                 .ApplyTax(_tax)
                 .Build();
 
