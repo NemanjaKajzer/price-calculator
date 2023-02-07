@@ -9,6 +9,5 @@ namespace SharpenSkills.Logic
     public interface IMoney
     {
         decimal Amount { get; set; }
-        //Currency Currency { get; set; }
     }
 }
