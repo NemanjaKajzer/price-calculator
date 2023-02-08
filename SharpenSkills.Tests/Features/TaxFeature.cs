@@ -26,8 +26,8 @@ namespace SharpenSkills.Tests
 
 
             Assert.IsNotNull(report);
-            Assert.AreEqual(20.25, report.Price.Amount);
-            Assert.AreEqual(24.30, report.Total.Amount);
+            Assert.AreEqual("$20.25", report.Price.ToString());
+            Assert.AreEqual("$24.30", report.Total.ToString());
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace SharpenSkills.Tests
                 .Build();
 
             Assert.IsNotNull(report);
-            Assert.AreEqual(20.25, report.Price.Amount);
-            Assert.AreEqual(24.50, report.Total.Amount);
+            Assert.AreEqual("$20.25", report.Price.ToString());
+            Assert.AreEqual("$24.50", report.Total.ToString());
         }
     }
 }
