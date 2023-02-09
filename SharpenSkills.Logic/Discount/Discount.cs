@@ -1,10 +1,10 @@
 ﻿namespace SharpenSkills.Logic
 {
-    public class Tax : ITax
+    public class Discount : IDiscount
     {
         public Percentage Percentage { get; set; }
 
-        public Tax(decimal value)
+        public Discount(decimal value)
         {
             Percentage = new Percentage { Value = value };
         }
