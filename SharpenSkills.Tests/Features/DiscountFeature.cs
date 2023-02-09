@@ -11,16 +11,10 @@ namespace SharpenSkills.Tests.Features
             {
                 Name = "The Little Prince",
                 Upc = "12345",
-                Price = new Money { Amount = 20.25m },
+                Price = new Money(20.25m),
             };
 
-            var discount = new Discount
-            {
-                Percentage = new Percentage
-                {
-                    Value = 0.15m
-                }
-            }; 
+            var discount = new Discount(0.15m);
 
             var builder = new PriceReportBuilder();
 

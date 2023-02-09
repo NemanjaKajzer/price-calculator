@@ -11,6 +11,11 @@ namespace SharpenSkills.Logic
             Amount = 0;
         }
 
+        public Money(decimal amount)
+        {
+            Amount = amount;
+        }
+
         public static Money operator +(Money left, Money right)
         {
             return new Money { Amount = left.Amount + right.Amount };
