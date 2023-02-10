@@ -14,5 +14,11 @@
             DiscountTotal = product.Price * discount.Percentage;
             Total = Price + TaxTotal - DiscountTotal;
         }
+
+        public override string ToString()
+        {
+            var discountStr = DiscountTotal == 0m ? string.Empty : $"\r\nDiscounts = {DiscountTotal}";
+            return $"Cost = {Price}\r\nTax = {TaxTotal}{discountStr}\r\nTOTAL = {Total}";
+        }
     }
 }

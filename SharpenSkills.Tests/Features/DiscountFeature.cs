@@ -23,7 +23,6 @@ namespace SharpenSkills.Tests.Features
                 .ApplyDiscount(discount)
                 .Build();
 
-
             Assert.IsNotNull(report);
             Assert.AreEqual("$20.25", report.Price.ToString());
             Assert.AreEqual("$21.26", report.Total.ToString());
