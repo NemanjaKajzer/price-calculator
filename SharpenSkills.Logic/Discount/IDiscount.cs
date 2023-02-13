@@ -3,5 +3,6 @@
     public interface IDiscount
     {
         Percentage Percentage { get; set; }
+        string Upc { get; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SharpenSkills.Logic
 {
@@ -7,7 +8,7 @@ namespace SharpenSkills.Logic
 
         public IProduct Product { get; private set; }
         public ITax Tax { get; private set; } = new DefaultTax();
-        public IDiscount Discount { get; private set; } = new DefaultDiscount();
+        public List<IDiscount> Discounts { get; private set; } = new List<IDiscount> { new DefaultDiscount() };
 
         public PriceReportBuilder ApplyProduct(Product product)
         {
@@ -20,9 +21,9 @@ namespace SharpenSkills.Logic
             Tax = tax;
             return this;
         }
-        public PriceReportBuilder ApplyDiscount(IDiscount discount)
+        public PriceReportBuilder ApplyDiscount(Discount discount)
         {
-            Discount = discount;
+            Discounts.Add(discount);
             return this;
         }
 
@@ -33,7 +34,7 @@ namespace SharpenSkills.Logic
                 throw new NullReferenceException("Product not specified!");
             }
 
-            return new PriceReport(Product, Tax, Discount);
+            return new PriceReport(Product, Tax, Discounts);
         }
     }
 }
