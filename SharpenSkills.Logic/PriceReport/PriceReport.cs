@@ -17,8 +17,11 @@
 
         public override string ToString()
         {
-            var discountStr = DiscountTotal == 0m ? string.Empty : $"\r\nDiscounts = {DiscountTotal}";
-            return $"Cost = {Price}\r\nTax = {TaxTotal}{discountStr}\r\nTOTAL = {Total}";
+            var discountStr = DiscountTotal == 0m ? string.Empty : $"\nDiscounts = {DiscountTotal}";
+
+            return $"Cost = {Price}\n" +
+                    $"Tax = {TaxTotal}{discountStr}\n" +
+                    $"TOTAL = {Total}";
         }
     }
 }

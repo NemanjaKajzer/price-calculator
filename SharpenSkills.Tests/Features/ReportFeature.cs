@@ -23,7 +23,10 @@ namespace SharpenSkills.Tests.Features
                 .ApplyDiscount(discount)
                 .Build();
 
-            var expectedString = "Cost = $20.25\r\nTax = $4.05\r\nDiscounts = $3.04\r\nTOTAL = $21.26";
+            var expectedString = "Cost = $20.25\n" +
+                                        "Tax = $4.05\n" +
+                                        "Discounts = $3.04\n" +
+                                        "TOTAL = $21.26";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
@@ -45,7 +48,9 @@ namespace SharpenSkills.Tests.Features
                 .ApplyProduct(product)
                 .Build();
 
-            var expectedString = "Cost = $20.25\r\nTax = $4.05\r\nTOTAL = $24.30";
+            var expectedString = "Cost = $20.25\n" +
+                                        "Tax = $4.05\n" +
+                                        "TOTAL = $24.30";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
