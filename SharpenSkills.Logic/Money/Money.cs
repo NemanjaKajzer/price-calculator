@@ -51,9 +51,18 @@ namespace SharpenSkills.Logic
             return left.Amount == right.Amount;
         }
 
+        public static bool operator ==(Money left, decimal right)
+        {
+            return left.Amount == right;
+        }
+
         public static bool operator !=(Money left, Money right)
         {
             return left.Amount != right.Amount;
+        }
+        public static bool operator !=(Money left, decimal right)
+        {
+            return left.Amount != right;
         }
 
         public override string ToString()
