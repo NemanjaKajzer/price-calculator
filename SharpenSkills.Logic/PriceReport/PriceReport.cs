@@ -13,8 +13,10 @@ namespace SharpenSkills.Logic
         public PriceReport(IProduct product, ITax tax, List<IDiscount> discounts)
         {
             Price = product.Price;
-            TaxTotal = product.Price * tax.Percentage;
-            discounts.ForEach(x => DiscountTotal += x.Apply(product));
+            TaxTotal = tax.ApplyTax(product.Price);
+            discounts.Where(x => x.IsApplicable(product.Upc))
+                .ToList()
+                .ForEach(x => DiscountTotal += x.ApplyDiscount(product));
             Total = Price + TaxTotal - DiscountTotal;
         }
 

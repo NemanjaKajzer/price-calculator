@@ -21,7 +21,7 @@ namespace SharpenSkills.Logic
             return this;
         }
 
-        public PriceReportBuilder WithDiscount(Discount discount)
+        public PriceReportBuilder WithDiscount(IDiscount discount)
         {
             Discounts.Add(discount);
             return this;

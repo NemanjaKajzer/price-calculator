@@ -8,7 +8,7 @@ namespace SharpenSkills.Tests
         public void When_SelectiveDiscountHasSameUpc_DiscountShouldBeApplied()
         {
             var discount = new Discount(0.15m);
-            var selectiveDiscount = new Discount(0.07m, "12345");
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
             var product = new Product
             {
                 Name = "The Little Prince",
@@ -45,7 +45,7 @@ namespace SharpenSkills.Tests
             var tax = new Tax(0.21m);
 
             var discount = new Discount(0.15m);
-            var selectiveDiscount = new Discount(0.07m, "789");
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "789");
 
             var builder = new PriceReportBuilder();
             var report = builder

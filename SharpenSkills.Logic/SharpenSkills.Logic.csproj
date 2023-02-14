@@ -44,6 +44,7 @@
     <Compile Include="Discount\DefaultDiscount.cs" />
     <Compile Include="Discount\Discount.cs" />
     <Compile Include="Discount\IDiscount.cs" />
+    <Compile Include="Discount\SelectiveDiscount.cs" />
     <Compile Include="Money\IMoney.cs" />
     <Compile Include="Money\Money.cs" />
     <Compile Include="Percentage\IPercentage.cs" />
