@@ -18,9 +18,9 @@ namespace SharpenSkills.Tests
 
             var builder = new PriceReportBuilder();
             var report = builder
-                .ApplyProduct(product)
-                .ApplyDiscount(discount)
-                .ApplyDiscount(selectiveDiscount)
+                .WithProduct(product)
+                .WithDiscount(discount)
+                .WithDiscount(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
@@ -49,10 +49,10 @@ namespace SharpenSkills.Tests
 
             var builder = new PriceReportBuilder();
             var report = builder
-                .ApplyProduct(product)
-                .ApplyTax(tax)
-                .ApplyDiscount(discount)
-                .ApplyDiscount(selectiveDiscount)
+                .WithProduct(product)
+                .WithTax(tax)
+                .WithDiscount(discount)
+                .WithDiscount(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +

@@ -14,18 +14,8 @@ namespace SharpenSkills.Logic
         {
             Price = product.Price;
             TaxTotal = product.Price * tax.Percentage;
-            ApplyDiscounts(product, discounts);
+            discounts.ForEach(x => DiscountTotal += x.Apply(product));
             Total = Price + TaxTotal - DiscountTotal;
-        }
-
-        public void ApplyDiscounts(IProduct product, List<IDiscount> discounts)
-        {
-            var applicableDiscounts = discounts.Where(x => (x.Upc.Equals(product.Upc) || x.Upc.Equals(string.Empty)) && x.Percentage.Value > 0);
-
-            foreach (var discount in applicableDiscounts)
-            {
-                DiscountTotal +=  product.Price * discount.Percentage;
-            }
         }
 
         public override string ToString()

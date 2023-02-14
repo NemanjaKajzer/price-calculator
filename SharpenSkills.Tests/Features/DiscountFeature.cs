@@ -19,8 +19,8 @@ namespace SharpenSkills.Tests
             var builder = new PriceReportBuilder();
 
             var report = builder
-                .ApplyProduct(product)
-                .ApplyDiscount(discount)
+                .WithProduct(product)
+                .WithDiscount(discount)
                 .Build();
 
             Assert.IsNotNull(report);

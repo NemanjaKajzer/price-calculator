@@ -15,5 +15,18 @@
             Percentage = new Percentage { Value = value };
             Upc = upc;
         }
+
+        public bool IsApplicable(string upc)
+        {
+            return (Upc.Equals(string.Empty) || Upc.Equals(upc)) && Percentage.Value > 0;
+        }
+
+        public Money Apply(IProduct product)
+        {
+            if (!IsApplicable(product.Upc))
+                return new Money(0m);
+            
+            return product.Price * Percentage;
+        }
     }
 }
