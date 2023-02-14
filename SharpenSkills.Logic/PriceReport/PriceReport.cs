@@ -1,17 +1,22 @@
-﻿namespace SharpenSkills.Logic
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace SharpenSkills.Logic
 {
     public class PriceReport
     {
-        public Money Price { get; private set; }
-        public Money TaxTotal { get; private set; }
-        public Money Total { get; private set; }
-        public Money DiscountTotal { get; private set; }
+        public Money Price { get; private set; } = new Money();
+        public Money TaxTotal { get; private set; } = new Money();
+        public Money Total { get; private set; } = new Money();
+        public Money DiscountTotal { get; private set; } = new Money();
 
-        public PriceReport(IProduct product, ITax tax, IDiscount discount)
+        public PriceReport(IProduct product, ITax tax, List<IDiscount> discounts)
         {
             Price = product.Price;
-            TaxTotal = product.Price * tax.Percentage;
-            DiscountTotal = product.Price * discount.Percentage;
+            TaxTotal = tax.ApplyTax(product.Price);
+            discounts.Where(x => x.IsApplicable(product.Upc))
+                .ToList()
+                .ForEach(x => DiscountTotal += x.ApplyDiscount(product));
             Total = Price + TaxTotal - DiscountTotal;
         }
 

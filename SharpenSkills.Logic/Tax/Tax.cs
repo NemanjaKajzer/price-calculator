@@ -8,5 +8,10 @@
         {
             Percentage = new Percentage { Value = value };
         }
+
+        public Money ApplyTax(Money price)
+        {
+            return price * Percentage;
+        }
     }
 }
