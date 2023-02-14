@@ -1,6 +1,6 @@
 ﻿using SharpenSkills.Logic;
 
-namespace SharpenSkills.Tests.Features
+namespace SharpenSkills.Tests
 {
     public class DiscountFeature
     {
@@ -19,8 +19,8 @@ namespace SharpenSkills.Tests.Features
             var builder = new PriceReportBuilder();
 
             var report = builder
-                .ApplyProduct(product)
-                .ApplyDiscount(discount)
+                .WithProduct(product)
+                .WithDiscount(discount)
                 .Build();
 
             Assert.IsNotNull(report);
