@@ -13,10 +13,22 @@ namespace SharpenSkills.Logic
         public PriceReport(IProduct product, ITax tax, List<IDiscount> discounts)
         {
             Price = product.Price;
-            TaxTotal = tax.ApplyTax(product.Price);
-            discounts.Where(x => x.IsApplicable(product.Upc))
+
+            var applicableDiscounts = discounts.Where(x => x.IsApplicable(product.Upc))
+                .ToList();
+
+            applicableDiscounts.Where(x => x.IsBeforeTax)
                 .ToList()
-                .ForEach(x => DiscountTotal += x.ApplyDiscount(product));
+                .ForEach(x => DiscountTotal += x.ApplyDiscount(Price));
+
+            var discountedPriceBeforeTax = Price - DiscountTotal;
+
+            TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
+
+            applicableDiscounts.Where(x => !x.IsBeforeTax)
+                .ToList()
+                .ForEach(x => DiscountTotal += x.ApplyDiscount(discountedPriceBeforeTax));
+
             Total = Price + TaxTotal - DiscountTotal;
         }
 
@@ -25,8 +37,8 @@ namespace SharpenSkills.Logic
             var discountStr = DiscountTotal == 0m ? string.Empty : $"\nDiscounts = {DiscountTotal}";
 
             return $"Cost = {Price}\n" +
-                    $"Tax = {TaxTotal}{discountStr}\n" +
-                    $"TOTAL = {Total}";
+                   $"Tax = {TaxTotal}{discountStr}\n" +
+                   $"TOTAL = {Total}";
         }
     }
 }

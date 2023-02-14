@@ -7,8 +7,8 @@ namespace SharpenSkills.Tests
         [Test]
         public void When_SelectiveDiscountHasSameUpc_DiscountShouldBeApplied()
         {
-            var discount = new Discount(0.15m);
-            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
+            var discount = new Discount(0.15m, false);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345", false);
             var product = new Product
             {
                 Name = "The Little Prince",
@@ -24,9 +24,9 @@ namespace SharpenSkills.Tests
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                       "Tax = $4.05\n" +
-                                       "Discounts = $4.46\n" +
-                                       "TOTAL = $19.84";
+                                      "Tax = $4.05\n" +
+                                      "Discounts = $4.46\n" +
+                                      "TOTAL = $19.84";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
@@ -44,8 +44,8 @@ namespace SharpenSkills.Tests
 
             var tax = new Tax(0.21m);
 
-            var discount = new Discount(0.15m);
-            var selectiveDiscount = new SelectiveDiscount(0.07m, "789");
+            var discount = new Discount(0.15m, false);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "789", false);
 
             var builder = new PriceReportBuilder();
             var report = builder
@@ -56,9 +56,9 @@ namespace SharpenSkills.Tests
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                       "Tax = $4.25\n" +
-                                       "Discounts = $3.04\n" +
-                                       "TOTAL = $21.46";
+                                      "Tax = $4.25\n" +
+                                      "Discounts = $3.04\n" +
+                                      "TOTAL = $21.46";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
