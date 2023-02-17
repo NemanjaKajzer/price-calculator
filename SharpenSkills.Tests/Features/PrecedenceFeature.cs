@@ -2,10 +2,10 @@
 
 namespace SharpenSkills.Tests
 {
-    public class DiscountFeature
+    public class PrecedenceFeature
     {
         [Test]
-        public void When_OnlyDiscountSpecified_DefaultTaxAndDiscountShouldBeApplied()
+        public void When_DiscountBeforeTax_TaxShouldBeAppliedToDiscountedPrice()
         {
             var product = new Product
             {
@@ -15,17 +15,22 @@ namespace SharpenSkills.Tests
             };
 
             var discount = new Discount(0.15m);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
 
             var builder = new PriceReportBuilder();
-
             var report = builder
                 .WithProduct(product)
                 .WithDiscountAfterTax(discount)
+                .WithDiscountBeforeTax(selectiveDiscount)
                 .Build();
 
+            var expectedString = "Cost = $20.25\n" +
+                                      "Tax = $3.77\n" +
+                                      "Discounts = $4.24\n" +
+                                      "TOTAL = $19.78";
+
             Assert.IsNotNull(report);
-            Assert.AreEqual("$20.25", report.Price.ToString());
-            Assert.AreEqual("$21.26", report.Total.ToString());
+            Assert.AreEqual(expectedString, report.ToString());
         }
     }
 }

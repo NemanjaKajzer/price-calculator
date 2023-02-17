@@ -14,9 +14,9 @@
             return true;
         }
 
-        public Money ApplyDiscount(IProduct product)
+        public Money ApplyDiscount(Money price)
         {
-            return product.Price * Percentage;
+            return price * Percentage;
         }
     }
 }
