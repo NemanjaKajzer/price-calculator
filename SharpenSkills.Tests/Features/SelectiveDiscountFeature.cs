@@ -19,14 +19,14 @@ namespace SharpenSkills.Tests
             var builder = new PriceReportBuilder();
             var report = builder
                 .WithProduct(product)
-                .WithDiscount(discount)
-                .WithDiscount(selectiveDiscount)
+                .WithDiscountAfterTax(discount)
+                .WithDiscountAfterTax(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                       "Tax = $4.05\n" +
-                                       "Discounts = $4.46\n" +
-                                       "TOTAL = $19.84";
+                                      "Tax = $4.05\n" +
+                                      "Discounts = $4.46\n" +
+                                      "TOTAL = $19.84";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
@@ -51,14 +51,14 @@ namespace SharpenSkills.Tests
             var report = builder
                 .WithProduct(product)
                 .WithTax(tax)
-                .WithDiscount(discount)
-                .WithDiscount(selectiveDiscount)
+                .WithDiscountAfterTax(discount)
+                .WithDiscountAfterTax(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                       "Tax = $4.25\n" +
-                                       "Discounts = $3.04\n" +
-                                       "TOTAL = $21.46";
+                                      "Tax = $4.25\n" +
+                                      "Discounts = $3.04\n" +
+                                      "TOTAL = $21.46";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());

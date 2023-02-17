@@ -20,13 +20,13 @@ namespace SharpenSkills.Tests
 
             var report = builder
                 .WithProduct(product)
-                .WithDiscount(discount)
+                .WithDiscountAfterTax(discount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                        "Tax = $4.05\n" +
-                                        "Discounts = $3.04\n" +
-                                        "TOTAL = $21.26";
+                                      "Tax = $4.05\n" +
+                                      "Discounts = $3.04\n" +
+                                      "TOTAL = $21.26";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
@@ -49,8 +49,8 @@ namespace SharpenSkills.Tests
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
-                                        "Tax = $4.05\n" +
-                                        "TOTAL = $24.30";
+                                      "Tax = $4.05\n" +
+                                      "TOTAL = $24.30";
 
             Assert.IsNotNull(report);
             Assert.AreEqual(expectedString, report.ToString());
