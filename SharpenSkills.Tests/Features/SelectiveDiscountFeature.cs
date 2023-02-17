@@ -7,8 +7,8 @@ namespace SharpenSkills.Tests
         [Test]
         public void When_SelectiveDiscountHasSameUpc_DiscountShouldBeApplied()
         {
-            var discount = new Discount(0.15m, false);
-            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345", false);
+            var discount = new Discount(0.15m);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
             var product = new Product
             {
                 Name = "The Little Prince",
@@ -19,8 +19,8 @@ namespace SharpenSkills.Tests
             var builder = new PriceReportBuilder();
             var report = builder
                 .WithProduct(product)
-                .WithDiscount(discount)
-                .WithDiscount(selectiveDiscount)
+                .WithDiscountAfterTax(discount)
+                .WithDiscountAfterTax(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +
@@ -44,15 +44,15 @@ namespace SharpenSkills.Tests
 
             var tax = new Tax(0.21m);
 
-            var discount = new Discount(0.15m, false);
-            var selectiveDiscount = new SelectiveDiscount(0.07m, "789", false);
+            var discount = new Discount(0.15m);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "789");
 
             var builder = new PriceReportBuilder();
             var report = builder
                 .WithProduct(product)
                 .WithTax(tax)
-                .WithDiscount(discount)
-                .WithDiscount(selectiveDiscount)
+                .WithDiscountAfterTax(discount)
+                .WithDiscountAfterTax(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +

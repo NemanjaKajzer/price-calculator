@@ -10,14 +10,11 @@ namespace SharpenSkills.Logic
         public Money Total { get; private set; } = new Money();
         public Money DiscountTotal { get; private set; } = new Money();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discounts)
+        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax)
         {
             Price = product.Price;
 
-            var applicableDiscounts = discounts.Where(x => x.IsApplicable(product.Upc))
-                .ToList();
-
-            applicableDiscounts.Where(x => x.IsBeforeTax)
+            discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
                 .ToList()
                 .ForEach(x => DiscountTotal += x.ApplyDiscount(Price));
 
@@ -25,7 +22,7 @@ namespace SharpenSkills.Logic
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            applicableDiscounts.Where(x => !x.IsBeforeTax)
+            discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
                 .ToList()
                 .ForEach(x => DiscountTotal += x.ApplyDiscount(discountedPriceBeforeTax));
 

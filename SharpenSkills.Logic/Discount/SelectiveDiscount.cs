@@ -4,13 +4,11 @@
     {
         public Percentage Percentage { get; set; }
         public string Upc { get; }
-        public bool IsBeforeTax { get; }
 
-        public SelectiveDiscount(decimal value, string upc, bool isBeforeTax)
+        public SelectiveDiscount(decimal value, string upc)
         {
             Percentage = new Percentage { Value = value };
             Upc = upc;
-            IsBeforeTax = isBeforeTax;
         }
 
         public bool IsApplicable(string upc)

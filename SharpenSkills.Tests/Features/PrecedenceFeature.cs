@@ -14,14 +14,14 @@ namespace SharpenSkills.Tests
                 Price = new Money(20.25m),
             };
 
-            var discount = new Discount(0.15m, false);
-            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345", true);
+            var discount = new Discount(0.15m);
+            var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
 
             var builder = new PriceReportBuilder();
             var report = builder
                 .WithProduct(product)
-                .WithDiscount(discount)
-                .WithDiscount(selectiveDiscount)
+                .WithDiscountAfterTax(discount)
+                .WithDiscountBeforeTax(selectiveDiscount)
                 .Build();
 
             var expectedString = "Cost = $20.25\n" +

@@ -3,12 +3,10 @@
     public class Discount : IDiscount
     {
         public Percentage Percentage { get; set; }
-        public bool IsBeforeTax { get; }
 
-        public Discount(decimal value, bool isBeforeTax)
+        public Discount(decimal value)
         {
             Percentage = new Percentage { Value = value };
-            IsBeforeTax = isBeforeTax;
         }
 
         public bool IsApplicable(string upc)

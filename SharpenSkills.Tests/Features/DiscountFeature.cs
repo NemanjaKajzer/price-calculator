@@ -14,13 +14,13 @@ namespace SharpenSkills.Tests
                 Price = new Money(20.25m),
             };
 
-            var discount = new Discount(0.15m, false);
+            var discount = new Discount(0.15m);
 
             var builder = new PriceReportBuilder();
 
             var report = builder
                 .WithProduct(product)
-                .WithDiscount(discount)
+                .WithDiscountAfterTax(discount)
                 .Build();
 
             Assert.IsNotNull(report);
