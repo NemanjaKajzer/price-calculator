@@ -10,31 +10,38 @@ namespace SharpenSkills.Logic
         public Money Total { get; private set; } = new Money();
         public Money DiscountTotal { get; private set; } = new Money();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax)
+        public List<AbsoluteExpense> AppliedExpenses { get; private set; } = new List<AbsoluteExpense>();
+
+        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses)
         {
             Price = product.Price;
 
-            discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
-                .ToList()
-                .ForEach(x => DiscountTotal += x.ApplyDiscount(Price));
+            var beforeTaxDiscountTotal = discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
+                .Sum(x => x.ApplyDiscount(Price).Amount);
+            DiscountTotal = new Money(beforeTaxDiscountTotal);
 
             var discountedPriceBeforeTax = Price - DiscountTotal;
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
-                .ToList()
-                .ForEach(x => DiscountTotal += x.ApplyDiscount(discountedPriceBeforeTax));
+            var afterTaxDiscountTotal = discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
+                .Sum(x => x.ApplyDiscount(discountedPriceBeforeTax).Amount);
+            DiscountTotal += new Money(afterTaxDiscountTotal);
 
-            Total = Price + TaxTotal - DiscountTotal;
+            AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description))
+                .ToList();
+
+            var expensesTotal = new Money(AppliedExpenses.Sum(x => x.Amount.Amount));
+
+            Total = Price + TaxTotal - DiscountTotal + expensesTotal;
         }
 
         public override string ToString()
         {
-            var discountStr = DiscountTotal == 0m ? string.Empty : $"\nDiscounts = {DiscountTotal}";
-
             return $"Cost = {Price}\n" +
-                   $"Tax = {TaxTotal}{discountStr}\n" +
+                   $"Tax = {TaxTotal}\n" +
+                   (DiscountTotal == 0m ? string.Empty : $"Discounts = {DiscountTotal}\n") +
+                   (AppliedExpenses.Any() ? $"{string.Join("\n", AppliedExpenses)}\n" : string.Empty) +
                    $"TOTAL = {Total}";
         }
     }
