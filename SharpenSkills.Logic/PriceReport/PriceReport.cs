@@ -16,17 +16,20 @@ namespace SharpenSkills.Logic
         {
             Price = product.Price;
 
-            DiscountTotal = new Money(discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
-                .Sum(x => x.ApplyDiscount(Price).Amount));
+            var beforeTaxDiscountTotal = discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
+                .Sum(x => x.ApplyDiscount(Price).Amount);
+            DiscountTotal = new Money(beforeTaxDiscountTotal);
 
             var discountedPriceBeforeTax = Price - DiscountTotal;
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            DiscountTotal += new Money(discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
-                .Sum(x => x.ApplyDiscount(discountedPriceBeforeTax).Amount));
+            var afterTaxDiscountTotal = discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
+                .Sum(x => x.ApplyDiscount(discountedPriceBeforeTax).Amount);
+            DiscountTotal += new Money(afterTaxDiscountTotal);
 
-            AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description)).ToList();
+            AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description))
+                .ToList();
 
             var expensesTotal = new Money(AppliedExpenses.Sum(x => x.Amount.Amount));
 
