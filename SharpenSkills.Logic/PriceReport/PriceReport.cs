@@ -9,8 +9,9 @@ namespace SharpenSkills.Logic
         public Money TaxTotal { get; private set; } = new Money();
         public Money Total { get; private set; } = new Money();
         public Money DiscountTotal { get; private set; } = new Money();
+        public List<IExpense> Expenses { get; private set; } = new List<IExpense>();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax)
+        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses)
         {
             Price = product.Price;
 
@@ -26,15 +27,26 @@ namespace SharpenSkills.Logic
                 .ToList()
                 .ForEach(x => DiscountTotal += x.ApplyDiscount(discountedPriceBeforeTax));
 
-            Total = Price + TaxTotal - DiscountTotal;
+            var expensesTotal = new Money(0m);
+            expenses.ForEach(x =>
+            {
+                expensesTotal += x.ApplyExpense(Price);
+                Expenses.Add(x);
+            });
+
+            Total = Price + TaxTotal - DiscountTotal + expensesTotal;
         }
 
         public override string ToString()
         {
             var discountStr = DiscountTotal == 0m ? string.Empty : $"\nDiscounts = {DiscountTotal}";
+            var expensesStr = string.Empty;
+            Expenses.ForEach(x => { expensesStr += $"{x.Description} = {x.ApplyExpense(Price)}\n"; });
 
             return $"Cost = {Price}\n" +
-                   $"Tax = {TaxTotal}{discountStr}\n" +
+                   $"Tax = {TaxTotal}" +
+                   $"{discountStr}\n" +
+                   $"{expensesStr}" +
                    $"TOTAL = {Total}";
         }
     }
