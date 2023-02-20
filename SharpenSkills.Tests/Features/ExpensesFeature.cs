@@ -1,6 +1,6 @@
 ﻿using SharpenSkills.Logic;
 
-namespace SharpenSkills.Tests.Features
+namespace SharpenSkills.Tests
 {
     public class ExpensesFeature
     {

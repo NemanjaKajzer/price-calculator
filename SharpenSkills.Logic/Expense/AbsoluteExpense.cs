@@ -15,5 +15,10 @@
         {
             return Amount;
         }
+
+        public override string ToString()
+        {
+            return $"{Description} = {Amount}";
+        }
     }
 }
