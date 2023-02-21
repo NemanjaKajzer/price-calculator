@@ -16,13 +16,13 @@ namespace SharpenSkills.Logic
         {
             Price = product.Price;
 
-            DiscountTotal = discountCalculator.Apply(discountsBeforeTax, Price, product.Upc, DiscountTotal);
+            DiscountTotal = discountCalculator.Apply(discountsBeforeTax.Where(x => x.IsApplicable(product.Upc)).ToList(), Price);
 
             var discountedPriceBeforeTax = Price - DiscountTotal;
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            DiscountTotal += discountCalculator.Apply(discountsAfterTax, discountedPriceBeforeTax, product.Upc, DiscountTotal);
+            DiscountTotal += discountCalculator.Apply(discountsAfterTax.Where(x => x.IsApplicable(product.Upc)).ToList(), discountedPriceBeforeTax);
 
             AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description))
                 .ToList();
