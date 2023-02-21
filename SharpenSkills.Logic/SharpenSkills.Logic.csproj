@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiscountCalculator\AdditiveDiscountCalculator.cs" />
     <Compile Include="Discount\DefaultDiscount.cs" />
     <Compile Include="Discount\Discount.cs" />
     <Compile Include="Discount\IDiscount.cs" />
+    <Compile Include="DiscountCalculator\IDiscountCalculator.cs" />
+    <Compile Include="DiscountCalculator\MultiplicativeDiscountCalculator.cs" />
     <Compile Include="Discount\SelectiveDiscount.cs" />
     <Compile Include="Expense\AbsoluteExpense.cs" />
     <Compile Include="Expense\IExpense.cs" />

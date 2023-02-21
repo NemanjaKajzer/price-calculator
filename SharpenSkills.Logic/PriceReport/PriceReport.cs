@@ -12,21 +12,17 @@ namespace SharpenSkills.Logic
 
         public List<AbsoluteExpense> AppliedExpenses { get; private set; } = new List<AbsoluteExpense>();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses, bool multiplicativeDiscounts)
+        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses, IDiscountCalculator discountCalculator)
         {
             Price = product.Price;
 
-            discountsBeforeTax.Where(x => x.IsApplicable(product.Upc))
-                .ToList()
-                .ForEach(x => DiscountTotal += multiplicativeDiscounts ? x.ApplyDiscount(Price - DiscountTotal) : x.ApplyDiscount(Price));
+            DiscountTotal = discountCalculator.Apply(discountsBeforeTax, Price, product.Upc, DiscountTotal);
 
             var discountedPriceBeforeTax = Price - DiscountTotal;
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            discountsAfterTax.Where(x => x.IsApplicable(product.Upc))
-                .ToList()
-                .ForEach(x => DiscountTotal += multiplicativeDiscounts ? x.ApplyDiscount(discountedPriceBeforeTax - DiscountTotal) : x.ApplyDiscount(discountedPriceBeforeTax));
+            DiscountTotal += discountCalculator.Apply(discountsAfterTax, discountedPriceBeforeTax, product.Upc, DiscountTotal);
 
             AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description))
                 .ToList();
