@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SharpenSkills.Logic
 {
@@ -6,11 +7,7 @@ namespace SharpenSkills.Logic
     {
         public Money Apply(List<IDiscount> discounts, Money price)
         {
-            var discountTotal = new Money(0m);
-
-            discounts.ForEach(x => discountTotal += x.ApplyDiscount(price - discountTotal));
-
-            return discountTotal;
+            return discounts.Aggregate(new Money(0m), (total, discount) => total += discount.ApplyDiscount(price - total));
         }
     }
 }
