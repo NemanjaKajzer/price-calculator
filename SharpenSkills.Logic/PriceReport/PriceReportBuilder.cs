@@ -9,8 +9,8 @@ namespace SharpenSkills.Logic
         public ITax Tax { get; private set; } = new DefaultTax();
         public List<IDiscount> DiscountsAfterTax { get; private set; } = new List<IDiscount> { new DefaultDiscount() };
         public List<IDiscount> DiscountsBeforeTax { get; private set; } = new List<IDiscount>() ;
-
         public List<IExpense> Expenses { get; private set; } = new List<IExpense>();
+        public IDiscountCalculator DiscountCalculator { get; private set; } = new AdditiveDiscountCalculator();
 
         public PriceReportBuilder WithProduct(Product product)
         {
@@ -41,6 +41,12 @@ namespace SharpenSkills.Logic
             return this;
         }
 
+        public PriceReportBuilder WithMultiplicativeDiscounts()
+        {
+            DiscountCalculator = new MultiplicativeDiscountCalculator();
+            return this;
+        }
+
         public PriceReport Build()
         {
             if (Product == null)
@@ -48,7 +54,7 @@ namespace SharpenSkills.Logic
                 throw new NullReferenceException("Product not specified!");
             }
 
-            return new PriceReport(Product, Tax, DiscountsAfterTax, DiscountsBeforeTax, Expenses);
+            return new PriceReport(Product, Tax, DiscountsAfterTax, DiscountsBeforeTax, Expenses, DiscountCalculator);
         }
     }
 }
