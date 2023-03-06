@@ -4,6 +4,6 @@ namespace SharpenSkills.Logic
 {
     public interface IDiscountCalculator
     {
-        Money Apply(List<IDiscount> discounts, Money price);
+        Money Apply(IEnumerable<IDiscount> discounts, Money price);
     }
 }

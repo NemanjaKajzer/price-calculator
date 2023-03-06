@@ -5,7 +5,7 @@ namespace SharpenSkills.Logic
 {
     public class AdditiveDiscountCalculator : IDiscountCalculator
     {
-        public Money Apply(List<IDiscount> discounts, Money price)
+        public Money Apply(IEnumerable<IDiscount> discounts, Money price)
         {
             return new Money(discounts.Sum(x => x.ApplyDiscount(price).Amount));
         }

@@ -16,13 +16,13 @@ namespace SharpenSkills.Logic
         {
             Price = product.Price;
 
-            DiscountTotal = discountCalculator.Apply(discountsBeforeTax.Where(x => x.IsApplicable(product.Upc)).ToList(), Price);
+            DiscountTotal = discountCalculator.Apply(discountsBeforeTax.Where(x => x.IsApplicable(product.Upc)), Price);
 
             var discountedPriceBeforeTax = Price - DiscountTotal;
 
             TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
 
-            DiscountTotal += discountCalculator.Apply(discountsAfterTax.Where(x => x.IsApplicable(product.Upc)).ToList(), discountedPriceBeforeTax);
+            DiscountTotal += discountCalculator.Apply(discountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
 
             AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description))
                 .ToList();
@@ -40,9 +40,9 @@ namespace SharpenSkills.Logic
                 .Aggregate((joined, expense) => $"{joined}\n{expense}\n") : string.Empty;
 
             return $"Cost = {Price}\n" +
-                   $"Tax = {TaxTotal}" +
-                   $"{discountStr}\n" +
-                   $"{expensesStr}" +
+                   $"Tax = {TaxTotal}\n" +
+                   (DiscountTotal == 0m ? string.Empty : $"Discounts = {DiscountTotal}\n") +
+                   (AppliedExpenses.Any() ? $"{string.Join("\n", AppliedExpenses)}\n" : string.Empty) +
                    $"TOTAL = {Total}";
         }
     }
