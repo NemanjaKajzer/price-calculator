@@ -7,7 +7,6 @@ build_job:
   script:
    - 'dotnet restore'
    - 'dotnet build'
-   - 'nuget restore'
    - 'dotnet pack'
 
 test_job:
