@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SharpenSkills.Logic
 {
-    public class PriceReportBuilder
+    public class ConfigurationBuilder
     {
         public IProduct Product { get; private set; }
         public ITax Tax { get; private set; } = new DefaultTax();
@@ -12,49 +12,49 @@ namespace SharpenSkills.Logic
         public List<IExpense> Expenses { get; private set; } = new List<IExpense>();
         public IDiscountCalculator DiscountCalculator { get; private set; } = new AdditiveDiscountCalculator();
 
-        public PriceReportBuilder WithProduct(Product product)
+        public ConfigurationBuilder WithProduct(Product product)
         {
             Product = product;
             return this;
         }
 
-        public PriceReportBuilder WithTax(ITax tax)
+        public ConfigurationBuilder WithTax(ITax tax)
         {
             Tax = tax;
             return this;
         }
 
-        public PriceReportBuilder WithDiscountAfterTax(IDiscount discount)
+        public ConfigurationBuilder WithDiscountAfterTax(IDiscount discount)
         {
             DiscountsAfterTax.Add(discount);
             return this;
         }
 
-        public PriceReportBuilder WithDiscountBeforeTax(IDiscount discount)
+        public ConfigurationBuilder WithDiscountBeforeTax(IDiscount discount)
         {
             DiscountsBeforeTax.Add(discount);
             return this;
         }
-        public PriceReportBuilder WithExpense(IExpense expense)
+        public ConfigurationBuilder WithExpense(IExpense expense)
         {
             Expenses.Add(expense);
             return this;
         }
 
-        public PriceReportBuilder WithMultiplicativeDiscounts()
+        public ConfigurationBuilder WithMultiplicativeDiscounts()
         {
             DiscountCalculator = new MultiplicativeDiscountCalculator();
             return this;
         }
 
-        public PriceReport Build()
+        public Configuration Build()
         {
             if (Product == null)
             {
                 throw new NullReferenceException("Product not specified!");
             }
 
-            return new PriceReport(Product, Tax, DiscountsAfterTax, DiscountsBeforeTax, Expenses, DiscountCalculator);
+            return new Configuration(Product, Tax, DiscountsAfterTax, DiscountsBeforeTax, Expenses, DiscountCalculator);
         }
     }
 }

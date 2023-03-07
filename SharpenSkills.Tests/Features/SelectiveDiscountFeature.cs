@@ -16,7 +16,7 @@ namespace SharpenSkills.Tests
                 Price = new Money(20.25m),
             };
 
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
             var report = builder
                 .WithProduct(product)
                 .WithDiscountAfterTax(discount)
@@ -47,7 +47,7 @@ namespace SharpenSkills.Tests
             var discount = new Discount(0.15m);
             var selectiveDiscount = new SelectiveDiscount(0.07m, "789");
 
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
             var report = builder
                 .WithProduct(product)
                 .WithTax(tax)

@@ -19,7 +19,7 @@ namespace SharpenSkills.Tests
             var packagingExpense = new PercentageExpense(0.01m, "Packaging");
             var transportExpense = new AbsoluteExpense(2.2m, "Transport");
 
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
             var report = builder
                 .WithProduct(product)
                 .WithTax(tax)
@@ -51,7 +51,7 @@ namespace SharpenSkills.Tests
             };
             var tax = new Tax(0.21m);
 
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
 
             var report = builder
                 .WithProduct(product)

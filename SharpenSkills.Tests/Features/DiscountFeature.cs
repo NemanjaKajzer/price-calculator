@@ -16,7 +16,7 @@ namespace SharpenSkills.Tests
 
             var discount = new Discount(0.15m);
 
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
 
             var report = builder
                 .WithProduct(product)

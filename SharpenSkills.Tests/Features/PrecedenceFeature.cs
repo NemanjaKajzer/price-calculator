@@ -17,20 +17,21 @@ namespace SharpenSkills.Tests
             var discount = new Discount(0.15m);
             var selectiveDiscount = new SelectiveDiscount(0.07m, "12345");
 
-            var builder = new PriceReportBuilder();
-            var report = builder
-                .WithProduct(product)
+            var builder = new ConfigurationBuilder();
+            var configuration = builder
                 .WithDiscountAfterTax(discount)
-                .WithDiscountBeforeTax(selectiveDiscount)
-                .Build();
+                .WithDiscountBeforeTax(selectiveDiscount);
 
             var expectedString = "Cost = $20.25\n" +
                                       "Tax = $3.77\n" +
                                       "Discounts = $4.24\n" +
                                       "TOTAL = $19.78";
 
-            Assert.IsNotNull(report);
-            Assert.AreEqual(expectedString, report.ToString());
+            var calculator = new PriceCalculator();
+            var actualString = calculator.Calculate(configuration, product);
+
+            Assert.IsNotNull(actualString);
+            Assert.AreEqual(expectedString, actualString);
         }
     }
 }

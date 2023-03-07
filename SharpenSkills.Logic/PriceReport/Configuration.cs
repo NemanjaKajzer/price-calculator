@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SharpenSkills.Logic
 {
-    public class PriceReport
+    public class Configuration
     {
         public Money Price { get; private set; } = new Money();
         public Money TaxTotal { get; private set; } = new Money();
@@ -12,7 +12,7 @@ namespace SharpenSkills.Logic
 
         public IEnumerable<AbsoluteExpense> AppliedExpenses { get; private set; } = new List<AbsoluteExpense>();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses, IDiscountCalculator discountCalculator)
+        public Configuration(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses, IDiscountCalculator discountCalculator)
         {
             Price = product.Price;
 

@@ -23,7 +23,7 @@ namespace SharpenSkills.Tests
         [Test]
         public void When_OnlyPriceSpecified_DefaultTaxShouldBeApplied()
         {
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
             var report = builder
                 .WithProduct(_product)
                 .Build();
@@ -36,7 +36,7 @@ namespace SharpenSkills.Tests
         [Test]
         public void When_PriceAndTaxSpecified_CustomTaxShouldBeApplied()
         {
-            var builder = new PriceReportBuilder();
+            var builder = new ConfigurationBuilder();
 
             var report = builder
                 .WithProduct(_product)
