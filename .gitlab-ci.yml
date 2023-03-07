@@ -7,7 +7,8 @@ build_job:
   script:
    - 'dotnet restore'
    - 'dotnet build'
-   - 'dotnet pack'
+   - 'ls'
+   - 'dotnet pack --no-build'
 
 test_job:
   stage: test
