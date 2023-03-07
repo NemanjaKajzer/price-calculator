@@ -7,7 +7,7 @@ build_job:
   script:
    - 'dotnet restore'
    - 'dotnet build'
-   - 'dotnet pack ~/SharpenSkills.Logic/SharpenSkills.Logic.csproj --no-build'
+   - 'dotnet pack ./SharpenSkills.Logic/SharpenSkills.Logic.csproj'
 
 test_job:
   stage: test
