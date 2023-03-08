@@ -17,7 +17,9 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - dotnet nuget push "bin/Release/*.nupkg" --source gitlab
+    - cd $CI_BUILDS_DIR
+    - ls
+    - dotnet nuget push "/bin/Release/*.nupkg" --source gitlab
 
 
 
