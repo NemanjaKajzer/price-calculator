@@ -7,12 +7,19 @@ build_job:
   script:
    - 'dotnet restore'
    - 'dotnet build ./SharpenSkills.Logic/SharpenSkills.Logic.csproj --configuration Release'
-   - 'dotnet pack ./SharpenSkills.Logic/SharpenSkills.Logic.csproj'
+   - 'dotnet pack ./SharpenSkills.Logic/SharpenSkills.Logic.csproj --no-build'
 
 test_job:
   stage: test
   script:
     - 'dotnet test'
+
+deploy_job:
+  stage: deploy
+  script:
+    - dotnet nuget add source "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/nuget/index.json" --name gitlab --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text
+    - dotnet nuget push "bin/Release/*.nupkg" --source gitlab
+
 
 
 
