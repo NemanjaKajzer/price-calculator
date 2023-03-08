@@ -17,7 +17,7 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - dotnet nuget push "./SharpenSkills.Logic/Packages/*.nupkg" --source gitlab
+    - dotnet nuget push "bin/Release/*.nupkg" --source gitlab
 
 
 
