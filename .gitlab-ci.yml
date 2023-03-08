@@ -17,9 +17,7 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - cd $CI_BUILDS_DIR
-    - ls
-    - dotnet nuget push "/bin/Release/*.nupkg" --source gitlab
+    - dotnet nuget push "$CI_BUILDS_DIR/AT3yZQ7Z/0/n.kajzer/sharpen-your-skills-assignment/SharpenSkills.Logic/bin/Release/*.nupkg" --source gitlab
 
 
 
