@@ -17,9 +17,6 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - dotnet nuget remove source gitlab
-    - dotnet nuget remove source vega-gitlab
-    - dotnet nuget remove source sys-gitlab
     - dotnet nuget add source "https://git.vegaitsourcing.rs/api/v4/projects/3902/packages/nuget/index.json" --name sys-gitlab --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text
     - dotnet nuget push $CI_BUILDS_DIR\AT3yZQ7Z\0\n.kajzer\sharpen-your-skills-assignment\SharpenSkills.Logic\bin\Release\*.nupkg --source sys-gitlab
     
