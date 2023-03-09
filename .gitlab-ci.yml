@@ -7,7 +7,7 @@ build_job:
   stage: build
   script:
    - 'dotnet restore'
-   - 'dotnet build ./SharpenSkills.Logic/SharpenSkills.Logic.csproj --configuration Release'
+   - 'dotnet build ./SharpenSkills.Logic/SharpenSkills.Logic.csproj --configuration Release --no-incremental'
 
 
 test_job:
