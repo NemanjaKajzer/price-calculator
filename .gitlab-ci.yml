@@ -6,8 +6,8 @@ stages:
 build_job:
   stage: build
   script:
-   - 'dotnet restore'
-   - 'dotnet build --configuration Release'
+   - dotnet restore
+   - dotnet build --configuration Release
   artifacts:
     paths:
       - SharpenSkills.Logic/bin/
@@ -15,7 +15,7 @@ build_job:
 test_job:
   stage: test
   script:
-    - 'dotnet test --configuration Release'
+    - dotnet test --configuration Release
 
 deploy_job:
   stage: deploy
