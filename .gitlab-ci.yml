@@ -8,6 +8,9 @@ build_job:
   script:
    - 'dotnet restore'
    - 'dotnet build --configuration Release'
+  artifacts:
+    paths:
+      - bin/
 
 
 test_job:
@@ -17,6 +20,8 @@ test_job:
 
 deploy_job:
   stage: deploy
+  dependencies:
+    - build_job
   script:
     - dotnet nuget push "$CI_BUILDS_DIR\AT3yZQ7Z\0\n.kajzer\sharpen-your-skills-assignment\SharpenSkills.Logic\bin\Release\*.nupkg" --source VegaNuget    
 
