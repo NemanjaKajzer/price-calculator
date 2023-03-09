@@ -10,7 +10,7 @@ build_job:
    - 'dotnet build --configuration Release'
   artifacts:
     paths:
-      - bin/
+      - SharpenSkills.Logic/bin/
 
 
 test_job:
