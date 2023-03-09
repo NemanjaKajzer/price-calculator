@@ -23,10 +23,8 @@ deploy_job:
   dependencies:
     - build_job
   script:
-    - dotnet nuget push "$CI_BUILDS_DIR\AT3yZQ7Z\0\n.kajzer\sharpen-your-skills-assignment\SharpenSkills.Logic\bin\Release\SharpenSkills.Logic.1.0.0.nupkg" --source VegaNuget
-  only:
-    refs:
-      - master    
+    - dotnet nuget push SharpenSkills.Logic\bin\Release\*.nupkg --source VegaNuget
+
 
 
 
