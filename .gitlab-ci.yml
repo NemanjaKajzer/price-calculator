@@ -18,13 +18,7 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - cd $CI_BUILDS_DIR\AT3yZQ7Z\0\n.kajzer\
-    - cd sharpen-your-skills-assignment
-    - cd SharpenSkills.Logic
-    - ls
-    - cd bin
-    - cd Release
-    - dotnet nuget push "$CI_BUILDS_DIR\AT3yZQ7Z\0\n.kajzer\sharpen-your-skills-assignment\SharpenSkills.Logic\bin\Release\*.nupkg" --source VegaNuget    
+    - dotnet nuget push C:\gitlab\builds\AT3yZQ7Z\0\n.kajzer\sharpen-your-skills-assignment\SharpenSkills.Logic\bin\Release\SharpenSkills.Logic.1.0.0.nupkg --source VegaNuget    
 
 
 
