@@ -13,7 +13,7 @@ build_job:
 test_job:
   stage: test
   script:
-    - 'dotnet test'
+    - 'dotnet test --configuration Release'
 
 deploy_job:
   stage: deploy
