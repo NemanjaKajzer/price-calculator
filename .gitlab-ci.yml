@@ -7,7 +7,7 @@ build_job:
   stage: build
   script:
    - 'dotnet restore'
-   - 'dotnet build --configuration Release --no-incremental'
+   - 'dotnet build --configuration Release'
 
 
 test_job:
