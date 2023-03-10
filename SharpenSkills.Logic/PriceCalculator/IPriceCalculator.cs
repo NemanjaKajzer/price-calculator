@@ -2,6 +2,6 @@
 {
     public interface IPriceCalculator
     {
-        string Calculate(ConfigurationBuilder configuration, Product product);
+        PriceReport Calculate(Product product);
     }
 }

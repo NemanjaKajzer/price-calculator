@@ -57,11 +57,10 @@
     <Compile Include="Percentage\Percentage.cs" />
     <Compile Include="PriceCalculator\IPriceCalculator.cs" />
     <Compile Include="PriceCalculator\PriceCalculator.cs" />
-    <Compile Include="PriceReport\Configuration.cs" />
+    <Compile Include="PriceReport\PriceReport.cs" />
     <Compile Include="Product\IProduct.cs" />
     <Compile Include="Product\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PriceReport\ConfigurationBuilder.cs" />
     <Compile Include="Tax\DefaultTax.cs" />
     <Compile Include="Tax\ITax.cs" />
     <Compile Include="Tax\Tax.cs" />

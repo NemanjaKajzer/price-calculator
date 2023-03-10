@@ -1,65 +1,64 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SharpenSkills.Logic {
-    public class PriceCalculator : IPriceCalculator {
-        public Money Price { get; private set; } = new Money();
-        public Money TaxTotal { get; private set; } = new Money();
-        public Money Total { get; private set; } = new Money();
-        public Money DiscountTotal { get; private set; } = new Money();
+namespace SharpenSkills.Logic
+{
+    public class PriceCalculator : IPriceCalculator
+    {
+        public ITax Tax { get; private set; } = new DefaultTax();
+        public List<IDiscount> DiscountsAfterTax { get; private set; } = new List<IDiscount> { new DefaultDiscount() };
+        public List<IDiscount> DiscountsBeforeTax { get; private set; } = new List<IDiscount>();
+        public List<IExpense> Expenses { get; private set; } = new List<IExpense>();
+        public IDiscountCalculator DiscountCalculator { get; private set; } = new AdditiveDiscountCalculator();
 
-        public IEnumerable<AbsoluteExpense> AppliedExpenses { get; private set; } = new List<AbsoluteExpense>();
+        public PriceCalculator WithTax(ITax tax)
+        {
+            Tax = tax;
+            return this;
+        }
 
-        public PriceCalculator() { }
+        public PriceCalculator WithDiscountAfterTax(IDiscount discount)
+        {
+            DiscountsAfterTax.Add(discount);
+            return this;
+        }
 
-        public string Calculate(ConfigurationBuilder configuration, Product product) {
+        public PriceCalculator WithDiscountBeforeTax(IDiscount discount)
+        {
+            DiscountsBeforeTax.Add(discount);
+            return this;
+        }
+        public PriceCalculator WithExpense(IExpense expense)
+        {
+            Expenses.Add(expense);
+            return this;
+        }
+
+        public PriceCalculator WithMultiplicativeDiscounts()
+        {
+            DiscountCalculator = new MultiplicativeDiscountCalculator();
+            return this;
+        }
+
+        public PriceReport Calculate(Product product)
+        {
             var price = product.Price;
 
-            var discountTotal = configuration.DiscountCalculator.Apply(configuration.DiscountsBeforeTax.Where(x => x.IsApplicable(product.Upc)), price);
+            var discountTotal = DiscountCalculator.Apply(DiscountsBeforeTax.Where(x => x.IsApplicable(product.Upc)), price);
 
             var discountedPriceBeforeTax = price - discountTotal;
 
-            var taxTotal = configuration.Tax.ApplyTax(discountedPriceBeforeTax);
+            var taxTotal = Tax.ApplyTax(discountedPriceBeforeTax);
 
-            discountTotal += configuration.DiscountCalculator.Apply(configuration.DiscountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
+            discountTotal += DiscountCalculator.Apply(DiscountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
 
-            var appliedExpenses = configuration.Expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(price).Amount, x.Description));
+            var appliedExpenses = Expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(price).Amount, x.Description));
 
             var expensesTotal = new Money(appliedExpenses.Sum(x => x.Amount.Amount));
 
             var total = price + taxTotal - discountTotal + expensesTotal;
 
-            return $"Cost = {price}\n" +
-                   $"Tax = {taxTotal}\n" +
-                   (discountTotal == 0m ? string.Empty : $"Discounts = {discountTotal}\n") +
-                   (appliedExpenses.Any() ? $"{string.Join("\n", appliedExpenses)}\n" : string.Empty) +
-                   $"TOTAL = {total}";
-        }
-
-        public PriceCalculator(ConfigurationBuilder configuration, Product product) {
-            Price = product.Price;
-
-            DiscountTotal = configuration.DiscountCalculator.Apply(configuration.DiscountsBeforeTax.Where(x => x.IsApplicable(product.Upc)), Price);
-
-            var discountedPriceBeforeTax = Price - DiscountTotal;
-
-            TaxTotal = configuration.Tax.ApplyTax(discountedPriceBeforeTax);
-
-            DiscountTotal += configuration.DiscountCalculator.Apply(configuration.DiscountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
-
-            AppliedExpenses = configuration.Expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description));
-
-            var expensesTotal = new Money(AppliedExpenses.Sum(x => x.Amount.Amount));
-
-            Total = Price + TaxTotal - DiscountTotal + expensesTotal;
-        }
-
-        public override string ToString() {
-            return $"Cost = {Price}\n" +
-                   $"Tax = {TaxTotal}\n" +
-                   (DiscountTotal == 0m ? string.Empty : $"Discounts = {DiscountTotal}\n") +
-                   (AppliedExpenses.Any() ? $"{string.Join("\n", AppliedExpenses)}\n" : string.Empty) +
-                   $"TOTAL = {Total}";
+            return new PriceReport(price, taxTotal, total, discountTotal, appliedExpenses);
         }
     }
 }
