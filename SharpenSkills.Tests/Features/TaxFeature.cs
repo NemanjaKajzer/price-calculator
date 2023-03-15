@@ -4,29 +4,18 @@ namespace SharpenSkills.Tests
 {
     public class TaxFeature
     {
-        private Product _product { get; set; }
-        private Tax _tax { get; set; }
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void When_OnlyPriceSpecified_DefaultTaxShouldBeApplied()
         {
-            _product = new Product
+            var product = new Product
             {
                 Name = "The Little Prince",
                 Upc = "12345",
                 Price = new Money(20.25m),
             };
 
-            _tax = new Tax(0.21m);
-        }
-
-        [Test]
-        public void When_OnlyPriceSpecified_DefaultTaxShouldBeApplied()
-        {
-            var builder = new PriceReportBuilder();
-            var report = builder
-                .WithProduct(_product)
-                .Build();
+            var calculator = new PriceCalculator();
+            var report = calculator.Calculate(product);
 
             Assert.IsNotNull(report);
             Assert.AreEqual("$20.25", report.Price.ToString());
@@ -36,12 +25,19 @@ namespace SharpenSkills.Tests
         [Test]
         public void When_PriceAndTaxSpecified_CustomTaxShouldBeApplied()
         {
-            var builder = new PriceReportBuilder();
+            var product = new Product
+            {
+                Name = "The Little Prince",
+                Upc = "12345",
+                Price = new Money(20.25m),
+            };
 
-            var report = builder
-                .WithProduct(_product)
-                .WithTax(_tax)
-                .Build();
+            var tax = new Tax(0.21m);
+
+            var calculator = new PriceCalculator()
+                .WithTax(tax);
+
+            var report = calculator.Calculate(product);
 
             Assert.IsNotNull(report);
             Assert.AreEqual("$20.25", report.Price.ToString());

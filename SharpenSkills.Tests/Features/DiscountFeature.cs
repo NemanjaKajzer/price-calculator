@@ -16,12 +16,10 @@ namespace SharpenSkills.Tests
 
             var discount = new Discount(0.15m);
 
-            var builder = new PriceReportBuilder();
+            var calculator = new PriceCalculator()
+                .WithDiscountAfterTax(discount);
 
-            var report = builder
-                .WithProduct(product)
-                .WithDiscountAfterTax(discount)
-                .Build();
+            var report = calculator.Calculate(product);
 
             Assert.IsNotNull(report);
             Assert.AreEqual("$20.25", report.Price.ToString());

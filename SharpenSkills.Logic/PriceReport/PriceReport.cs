@@ -12,23 +12,13 @@ namespace SharpenSkills.Logic
 
         public IEnumerable<AbsoluteExpense> AppliedExpenses { get; private set; } = new List<AbsoluteExpense>();
 
-        public PriceReport(IProduct product, ITax tax, List<IDiscount> discountsAfterTax, List<IDiscount> discountsBeforeTax, List<IExpense> expenses, IDiscountCalculator discountCalculator)
+        public PriceReport(Money price, Money taxTotal, Money total, Money discountTotal, IEnumerable<AbsoluteExpense> appliedExpenses)
         {
-            Price = product.Price;
-
-            DiscountTotal = discountCalculator.Apply(discountsBeforeTax.Where(x => x.IsApplicable(product.Upc)), Price);
-
-            var discountedPriceBeforeTax = Price - DiscountTotal;
-
-            TaxTotal = tax.ApplyTax(discountedPriceBeforeTax);
-
-            DiscountTotal += discountCalculator.Apply(discountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
-
-            AppliedExpenses = expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(Price).Amount, x.Description));
-
-            var expensesTotal = new Money(AppliedExpenses.Sum(x => x.Amount.Amount));
-
-            Total = Price + TaxTotal - DiscountTotal + expensesTotal;
+            Price = price;
+            TaxTotal = taxTotal;
+            Total = total;
+            DiscountTotal = discountTotal;
+            AppliedExpenses = appliedExpenses;
         }
 
         public override string ToString()
