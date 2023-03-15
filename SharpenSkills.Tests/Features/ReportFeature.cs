@@ -16,12 +16,10 @@ namespace SharpenSkills.Tests
 
             var discount = new Discount(0.15m);
 
-            var builder = new PriceReportBuilder();
+            var calculator = new PriceCalculator()
+                .WithDiscountAfterTax(discount);
 
-            var report = builder
-                .WithProduct(product)
-                .WithDiscountAfterTax(discount)
-                .Build();
+            var report = calculator.Calculate(product);
 
             var expectedString = "Cost = $20.25\n" +
                                       "Tax = $4.05\n" +
@@ -42,11 +40,9 @@ namespace SharpenSkills.Tests
                 Price = new Money(20.25m),
             };
 
-            var builder = new PriceReportBuilder();
+            var calculator = new PriceCalculator();
 
-            var report = builder
-                .WithProduct(product)
-                .Build();
+            var report = calculator.Calculate(product);
 
             var expectedString = "Cost = $20.25\n" +
                                       "Tax = $4.05\n" +

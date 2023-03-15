@@ -19,15 +19,14 @@ namespace SharpenSkills.Tests
             var packagingExpense = new PercentageExpense(0.01m, "Packaging");
             var transportExpense = new AbsoluteExpense(2.2m, "Transport");
 
-            var builder = new PriceReportBuilder();
-            var report = builder
-                .WithProduct(product)
+            var calculator = new PriceCalculator()
                 .WithTax(tax)
                 .WithDiscountAfterTax(discount)
                 .WithDiscountAfterTax(selectiveDiscount)
                 .WithExpense(packagingExpense)
-                .WithExpense(transportExpense)
-                .Build();
+                .WithExpense(transportExpense);
+
+            var report = calculator.Calculate(product);
 
             var expectedString = "Cost = $20.25\n" +
                                       "Tax = $4.25\n" +
@@ -51,12 +50,10 @@ namespace SharpenSkills.Tests
             };
             var tax = new Tax(0.21m);
 
-            var builder = new PriceReportBuilder();
+            var calculator = new PriceCalculator()
+                .WithTax(tax);
 
-            var report = builder
-                .WithProduct(product)
-                .WithTax(tax)
-                .Build();
+            var report = calculator.Calculate(product);
 
             var expectedString = "Cost = $20.25\n" +
                                       "Tax = $4.25\n" +
