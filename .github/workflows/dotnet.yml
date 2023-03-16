@@ -3,11 +3,7 @@
 
 name: .NET
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+on: [ "push" ]
 
 env:
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
@@ -38,9 +34,7 @@ jobs:
       
     - name: Push package
       run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_AUTH_TOKEN }} -s ${{ env.NUGET_SOURCE_URL }}
-  deploy:
-    runs-on: windows-latest
-    name: 'Deploy NuGet package'
+
     
     
     
