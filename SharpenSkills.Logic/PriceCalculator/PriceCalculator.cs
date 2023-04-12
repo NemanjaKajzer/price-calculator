@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SharpenSkills.Logic.DiscountCap;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SharpenSkills.Logic
@@ -10,6 +11,7 @@ namespace SharpenSkills.Logic
         public List<IDiscount> DiscountsBeforeTax { get; private set; } = new List<IDiscount>();
         public List<IExpense> Expenses { get; private set; } = new List<IExpense>();
         public IDiscountCalculator DiscountCalculator { get; private set; } = new AdditiveDiscountCalculator();
+        public IDiscountCap DiscountCap { get; private set; } = new AbsoluteDiscountCap(0);
 
         public PriceCalculator WithTax(ITax tax)
         {
@@ -40,6 +42,12 @@ namespace SharpenSkills.Logic
             return this;
         }
 
+        public PriceCalculator WithDiscountCap(IDiscountCap cap)
+        {
+            DiscountCap = cap;
+            return this;
+        }
+
         public PriceReport Calculate(Product product)
         {
             var price = product.Price;
@@ -51,6 +59,8 @@ namespace SharpenSkills.Logic
             var taxTotal = Tax.ApplyTax(discountedPriceBeforeTax);
 
             discountTotal += DiscountCalculator.Apply(DiscountsAfterTax.Where(x => x.IsApplicable(product.Upc)), discountedPriceBeforeTax);
+
+            discountTotal = DiscountCap.ApplyDiscountCap(discountTotal, price);
 
             var appliedExpenses = Expenses.Select(x => new AbsoluteExpense(x.ApplyExpense(price).Amount, x.Description));
 
